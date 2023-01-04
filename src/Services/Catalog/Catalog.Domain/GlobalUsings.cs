@@ -1,0 +1,13 @@
+﻿global using global::Catalog.Domain.Exceptions;
+global using MediatR;
+global using Catalog.Domain.SeedWork;
+global using Catalog.Domain.AggregatesModel.ProductAggregate;
+global using Catalog.Domain.AggregatesModel.CategoryAggregate;
+global using Catalog.Domain.AggregatesModel.Common;
+global using Catalog.Domain.Events;
+global using System.Collections.Generic;
+global using System.Linq;
+global using System.Reflection;
+global using System.Threading.Tasks;
+global using System.Threading;
+global using System;
