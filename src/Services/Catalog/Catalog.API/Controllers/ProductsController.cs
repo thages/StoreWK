@@ -38,15 +38,15 @@ public class ProductsController : ControllerBase
         return Ok();
     }
 
-    [Route("productId:int")]
+    [Route("{id}")]
     [HttpGet]
     [ProducesResponseType(typeof(Product), (int)HttpStatusCode.OK)]
     [ProducesResponseType((int)HttpStatusCode.NotFound)]
-    public async Task<ActionResult> GetProductAsync(int productId)
+    public async Task<ActionResult> GetProductAsync(int id)
     {
         try
         {
-            var product = await _productQueries.GetProductAsync(productId);
+            var product = await _productQueries.GetProductAsync(id);
             return Ok(product);
         }
         catch 
