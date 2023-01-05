@@ -8,7 +8,6 @@ public class ApplicationModule
     public ApplicationModule(string qconnstr)
     {
         QueriesConnectionString = qconnstr;
-
     }
 
     protected override void Load(ContainerBuilder builder)
@@ -39,9 +38,11 @@ public class ApplicationModule
         builder.RegisterAssemblyTypes(typeof(PageableListProductQueryHandler).GetTypeInfo().Assembly)
            .AsClosedTypesOf(typeof(IIntegrationEventHandler<>));
 
-
         builder.RegisterAssemblyTypes(typeof(UpdateProductCommandHandler).GetTypeInfo().Assembly)
            .AsClosedTypesOf(typeof(IIntegrationEventHandler<>));
+
+        builder.RegisterAssemblyTypes(typeof(UpdateCategoryCommandHandler).GetTypeInfo().Assembly)
+            .AsClosedTypesOf(typeof(IIntegrationEventHandler<>));
 
     }
 }

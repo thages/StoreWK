@@ -12,4 +12,10 @@ public class Category : Entity, IAggregateRoot
         _description = description;
         _createdAt = DateTime.UtcNow;
     }
+
+    public void SetCategoryNewValues(string name, string description)
+    {
+        _name = name;
+        _description = description;
+    }
 }

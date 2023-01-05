@@ -4,7 +4,7 @@ public interface ICategoryRepository : IRepository<Category>
 {
     Category Add(Category category);
 
-    void Update(Category category);
+    Category Update(Category category);
 
     Task<Category> GetAsync(int categoryId);
 

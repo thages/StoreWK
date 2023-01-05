@@ -33,9 +33,9 @@ public class CategoryRepository : ICategoryRepository
         return category;
     }
 
-    public void Update(Category category)
+    public Category Update(Category category)
     {
-        _context.Entry(category).State = EntityState.Modified;
+       return _context.Update(category).Entity;
     }
 
     public void Remove(Category category)

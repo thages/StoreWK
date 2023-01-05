@@ -36,7 +36,7 @@ public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand,
             categoryId: command.CategoryId
         );
 
-        var teste = _productRepository.Update(productToUpdate);
+        _ = _productRepository.Update(productToUpdate);
 
         return await _productRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
     }

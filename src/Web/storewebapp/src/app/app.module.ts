@@ -4,7 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PoModule } from '@po-ui/ng-components';
-import { RouterModule } from '@angular/router';
 import { PoTemplatesModule } from '@po-ui/ng-templates';
 import { ProductComponent } from './products/components/product/product.component';
 import { ListProductsComponent } from './products/components/list-products/list-products.component';
@@ -23,7 +22,6 @@ import { AddProductComponent } from './products/components/add-product/add-produ
     BrowserModule,
     AppRoutingModule,
     PoModule,
-    RouterModule.forRoot([]),
     PoTemplatesModule,
     FormsModule,
     ReactiveFormsModule

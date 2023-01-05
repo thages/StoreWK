@@ -25,7 +25,11 @@ namespace Catalog.Infrastructure.EntityConfigurations
                 .HasColumnName("Name")
                 .IsRequired();
 
-            categoryConfiguration.Property<string>("Description").IsRequired(false);
+            categoryConfiguration
+                .Property<string>("_description")
+                .UsePropertyAccessMode(PropertyAccessMode.Field)
+                .HasColumnName("Description")
+                .IsRequired(false);
 
             categoryConfiguration
                 .Property<DateTime>("_createdAt")

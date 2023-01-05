@@ -39,15 +39,15 @@ public class CategoriesController : ControllerBase
     }
 
 
-    [Route("categoryId:int")]
+    [Route("{id}")]
     [HttpGet]
     [ProducesResponseType(typeof(Category), (int)HttpStatusCode.OK)]
     [ProducesResponseType((int)HttpStatusCode.NotFound)]
-    public async Task<ActionResult> GetCategoryAsync(int categoryId)
+    public async Task<ActionResult> GetCategoryAsync(int id)
     {
         try
         {
-            var category = await _categoryQueries.GetCategoryAsync(categoryId);
+            var category = await _categoryQueries.GetCategoryAsync(id);
             return Ok(category);
         }
         catch
@@ -56,13 +56,36 @@ public class CategoriesController : ControllerBase
         }
     }
 
-    [Route("categoryId:int")]
+    [Route("update")]
+    [HttpPut]
+    [ProducesResponseType((int)HttpStatusCode.OK)]
+    [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+    public async Task<ActionResult> UpdateCategory([FromBody] UpdateCategoryCommand command, CancellationToken token)
+    {
+
+        _logger.LogInformation("--- Sending command: {CommandName} - {IdProperty}: {CommandId} ({@Command})",
+            command.GetGenericTypeName(),
+            nameof(command.Id),
+            command.Id,
+            command);
+
+        bool commandResult = await _mediator.Send(command, token);
+
+        if (!commandResult)
+        {
+            return BadRequest();
+        }
+
+        return Ok();
+    }
+
+    [Route("{id}")]
     [HttpDelete]
     [ProducesResponseType((int)HttpStatusCode.OK)]
     [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-    public async Task<ActionResult> DeleteProductAsync(int categoryId)
+    public async Task<ActionResult> DeleteProductAsync(int id)
     {
-        var requestDeleteCategory = new DeleteCategoryCommand(categoryId);
+        var requestDeleteCategory = new DeleteCategoryCommand(id);
 
         _logger.LogInformation("--- Sending command: {CommandName} - {IdProperty}: {CommandId} ({@Command})",
             requestDeleteCategory.GetGenericTypeName(),

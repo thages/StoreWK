@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Catalog.Infrastructure.Migrations
 {
     [DbContext(typeof(CatalogContext))]
-    [Migration("20221231202237_initial")]
+    [Migration("20230105210249_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,12 +27,13 @@ namespace Catalog.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("longtext");
-
                     b.Property<DateTime>("_createdAt")
                         .HasColumnType("datetime(6)")
                         .HasColumnName("CreatedAt");
+
+                    b.Property<string>("_description")
+                        .HasColumnType("longtext")
+                        .HasColumnName("Description");
 
                     b.Property<string>("_name")
                         .IsRequired()
@@ -50,15 +51,17 @@ namespace Catalog.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("longtext");
-
                     b.Property<int?>("_categoryId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("CategoryId");
 
                     b.Property<DateTime>("_createdAt")
                         .HasColumnType("datetime(6)")
                         .HasColumnName("CreatedAt");
+
+                    b.Property<string>("_description")
+                        .HasColumnType("longtext")
+                        .HasColumnName("Description");
 
                     b.Property<string>("_name")
                         .IsRequired()
@@ -71,17 +74,7 @@ namespace Catalog.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("_categoryId");
-
                     b.ToTable("products", (string)null);
-                });
-
-            modelBuilder.Entity("Catalog.Domain.AggregatesModel.ProductAggregate.Product", b =>
-                {
-                    b.HasOne("Catalog.Domain.AggregatesModel.CategoryAggregate.Category", null)
-                        .WithMany()
-                        .HasForeignKey("_categoryId")
-                        .OnDelete(DeleteBehavior.Restrict);
                 });
 #pragma warning restore 612, 618
         }

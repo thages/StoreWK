@@ -34,7 +34,7 @@ public class ProductQueries
 
         var query = await connection.QueryAsync<dynamic>(@"SELECT p.id, p.name, p.description, p.price, c.name as category 
                             FROM products p
-                            LEFT JOIN categories c ON p._categoryId = c.Id");
+                            LEFT JOIN categories c ON p.categoryId = c.Id");
 
         var products = query.Skip(searchParams.Skip).Take(searchParams.PageSize).ToList();
 

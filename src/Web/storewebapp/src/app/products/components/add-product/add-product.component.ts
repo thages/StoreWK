@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { PoModalAction, PoModalComponent, PoSelectOption } from '@po-ui/ng-components';
+import { Router } from '@angular/router';
+import {  PoModalComponent, PoSelectOption } from '@po-ui/ng-components';
 import { Subscription } from 'rxjs';
 import { CategoriesService } from 'src/app/categories/categories.service';
 import { ProductsService } from '../../products.service';
-import { IProduct } from '../../utils/products.types';
+import { IProductNew } from '../../utils/products.types';
 
 @Component({
   selector: 'app-add-product',
@@ -23,7 +24,8 @@ export class AddProductComponent  implements OnInit {
   constructor(
     private fb: UntypedFormBuilder,
     private categoriesService: CategoriesService,
-    private productsService: ProductsService
+    private productsService: ProductsService,
+    private router: Router
   ) {
     this.createReactiveForm();
   }
@@ -55,15 +57,16 @@ export class AddProductComponent  implements OnInit {
       name: ['', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(50)])],
       description: ['', Validators.compose([Validators.minLength(0), Validators.maxLength(150)])],
       price: ['', Validators.compose([Validators.required, Validators.min(1), Validators.max(999999)])],
-      category: [''],
+      categoryId: [''],
     });
   }
 
 
   saveForm() {
-    const newProduct: IProduct = this.reactiveForm.value;
-    console.log("new", newProduct);
-    //this.productsService.createProduct(newProduct);
+    const newProduct: IProductNew = this.reactiveForm.value;
+    this.productsService.createProduct(newProduct).subscribe(() => {
+      this.router.navigate(['/produtos/lista'])
+    });
   }
 
 }

@@ -8,6 +8,10 @@ export interface IProduct {
     category?: string | null;
 }
 
+export interface IProductNew extends Omit<IProduct, 'category'> {
+    categoryId?: number | null;
+}
+
 export enum ProductOrderBy {
     NAME_ASC = 1,
     NAME_DESC = 2
