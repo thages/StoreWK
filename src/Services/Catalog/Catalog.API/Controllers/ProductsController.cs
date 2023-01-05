@@ -79,13 +79,13 @@ public class ProductsController : ControllerBase
         return Ok();
     }
 
-    [Route("productId:int")]
+    [Route("{id}")]
     [HttpDelete]
     [ProducesResponseType((int)HttpStatusCode.OK)]
     [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-    public async Task<ActionResult> DeleteProductAsync(int productId)
+    public async Task<ActionResult> DeleteProductAsync(int id)
     {
-        var requestDeleteProduct = new DeleteProductCommand(productId);
+        var requestDeleteProduct = new DeleteProductCommand(id);
 
         _logger.LogInformation("--- Sending command: {CommandName} - {IdProperty}: {CommandId} ({@Command})",
             requestDeleteProduct.GetGenericTypeName(),
@@ -111,6 +111,23 @@ public class ProductsController : ControllerBase
     public async Task<ActionResult> PageableList([FromBody] ProductPageableListQuery query, CancellationToken token)
     {
         return Ok(await _mediator.Send(query, token));
+    }
+
+    [Route("list")]
+    [HttpGet]
+    [ProducesResponseType(typeof(List<Product>), (int)HttpStatusCode.OK)]
+    [ProducesResponseType((int)HttpStatusCode.NotFound)]
+    public async Task<ActionResult> ListCategoriesAsync()
+    {
+        try
+        {
+            var products = await _productQueries.GetProductsAsync();
+            return Ok(products);
+        }
+        catch
+        {
+            return NotFound();
+        }
     }
 
 }

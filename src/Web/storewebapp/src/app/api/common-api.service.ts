@@ -12,9 +12,41 @@ export class CommonApiService {
     this.path = path;
   }
 
-  list<T>(filter: T): Observable<any> {
+  protected findById<T>(id: number): Observable<T> {
     try {
-      return this.httpClient.post(`${this.path}/pageable-list`, filter);
+      return this.httpClient.get<T>(`${this.path}/${id}`);
+    } catch (e: any) {
+      return handleErrors(e);
+    }
+  }
+
+  protected insert<T, U>(entity: T): Observable<U> {
+    try {
+      return this.httpClient.post<U>(`${this.path}/create`, entity);
+    } catch (e: any) {
+      return handleErrors(e);
+    }
+  }
+
+  protected update<T, U>(entity: T): Observable<U> {
+    try {
+      return this.httpClient.put<U>(`${this.path}/update`, entity);
+    } catch (e: any) {
+      return handleErrors(e);
+    }
+  }
+
+  protected list<T>(): Observable<T> {
+    try {
+      return this.httpClient.get<T>(`${this.path}/list`);
+    } catch (e: any) {
+      return handleErrors(e);
+    }
+  }
+
+  protected pageableList<T, U>(filter: T): Observable<U> {
+    try {
+      return this.httpClient.post<U>(`${this.path}/pageable-list`, filter);
     } catch (e: any) {
       return handleErrors(e);
     }

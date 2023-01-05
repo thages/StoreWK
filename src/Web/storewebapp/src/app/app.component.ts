@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { PoMenuItem } from '@po-ui/ng-components';
+
 
 @Component({
   selector: 'app-root',
@@ -8,13 +10,5 @@ import { PoMenuItem } from '@po-ui/ng-components';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-
-  readonly menus: Array<PoMenuItem> = [
-    { label: 'Products', action: this.onClick.bind(this) }
-  ];
-
-  private onClick() {
-    
-  }
 
 }

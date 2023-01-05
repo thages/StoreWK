@@ -15,23 +15,34 @@ export class ProductsService extends CommonApiService {
     super('http://localhost:5070/api/v1/Products', httpClient)
    }
 
-  pageableList(filter: IProductsListFilter ): Observable<IPageableResult<IProduct>> {
-    console.log('ilter: ',filter)
-    return this.list<IProductsListFilter>(filter);
+   
+  getProductById(id: number): Observable<IProduct> {
+    return this.findById<IProduct>(id)
+  }
+  
+  createProduct(entity: IProduct): Observable<any> {
+    return this.insert<IProduct, any>(entity);
   }
 
-  getById(id: number): Observable<IProduct> {
-    const url = `${this.path}/${id}`
-    return this.httpClient.get<IProduct>(url)
+  editProduct(entity: IProduct): Observable<any> {
+    return this.update<IProduct, any>(entity);
+  }
+
+  listAll(): Observable<IProduct[]>{
+    return this.list<IProduct[]>();
+  }
+  
+  paginable(filter: IProductsListFilter ): Observable<IPageableResult<IProduct>> {
+    return this.pageableList<IProductsListFilter,IPageableResult<IProduct>>(filter);
   }
 
   getColumns(): Array<PoTableColumn> {
     return [
-      { property: 'Código', type: 'number', width: '8%' },
-      { property: 'Produto' },
-      { property: 'Descrição' },
-      { property: 'Preço', type: 'currency', format: 'BRL' },
-      { property: 'Categoria' }
+      { property: 'id', label: 'Código', type: 'number', width: '8%' },
+      { property: 'name', label: 'Produto' },
+      { property: 'description', label: 'Descrição' },
+      { property: 'price', label: 'Preço', type: 'currency', format: 'BRL' },
+      { property: 'category', label: 'Categoria' },
     ]
   }
 

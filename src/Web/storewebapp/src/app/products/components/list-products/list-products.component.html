@@ -1,7 +1,32 @@
+<po-page-default p-title="Produtos">
+    <div class="po-row">
+        <po-button
+          class="po-md-2"
+          p-label="Adicionar"
+          routerLink="/produtos/adicionar"
+        ></po-button>
+        <po-button *ngIf="isSelected"
+          class="po-md-2"
+          p-label="Editar"
+          routerLink="/produtos/editar/{{selectedProduct?.id}}"
+        ></po-button>
+        <po-button *ngIf="isSelected"
+          class="po-md-2"
+          p-label="Excluir"
+          routerLink="/produtos/editar/{{selectedProduct?.id}}"
+        ></po-button>
+    </div>
 <po-table
-  [p-auto-collapse]="true"
-  [p-columns]="columns"
-  [p-items]="items"
-  [p-sort]="true"
-  [p-striped]="true"
-> </po-table>
+    #POItemsOri
+    [p-columns]="columns"
+    [p-infinite-scroll]="true"
+    [p-selectable]="true"
+    [p-single-select]="true"
+    [p-hide-select-all]="true"
+    [p-infinite-scroll-distance]="80"
+    (p-selected)="changeOptions($event)"
+    (p-unselected)="hideButtons()"
+    [p-height]="300"
+    [p-items]="items"
+></po-table>
+</po-page-default>

@@ -1,4 +1,4 @@
-import { IPageableQuery, IPageableResult } from "src/app/api/common.types";
+import { IPageableQuery } from "src/app/api/common.types";
 
 export interface IProduct {
     id: number;

@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IPageableResult } from 'src/app/api/common.types';
 import { ProductsService } from '../../products.service';
 import { IProduct, IProductsListFilter, ProductOrderBy } from '../../utils/products.types';
-import { PoSelectOption } from '@po-ui/ng-components';
+import { PoSelectOption, PoTableColumnSort, PoTableComponent } from '@po-ui/ng-components';
 import { PoTableColumn } from '@po-ui/ng-components';
+import { Observable, BehaviorSubject, switchMap, map, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-list-products',
@@ -12,10 +13,15 @@ import { PoTableColumn } from '@po-ui/ng-components';
   styleUrls: ['./list-products.component.scss']
 })
 export class ListProductsComponent implements OnInit {
-
+  @ViewChild('POItemsOri', { static: true }) poItemsOri: PoTableComponent | undefined;
+  private productsSubscription: Subscription;
   columns: Array<PoTableColumn> = [];
   items: Array<any> = [];
-  productsList: IProduct[] = [];
+  showMoreDisabled: boolean = false;
+  isLoading: boolean = false;
+  isSelected: boolean = false;
+  selectedProduct?: IProduct | null;
+  productsList: IProduct[];
   filter: IProductsListFilter = {
     pageSize: 5,
     currentPage: 1,
@@ -23,17 +29,31 @@ export class ListProductsComponent implements OnInit {
   }
   constructor(
     private service: ProductsService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
 
-  ngOnInit(): void {
-    this.service.pageableList(this.filter).subscribe((productsList) => {
-      this.productsList = productsList.results
-    });
-    this.columns = this.service.getColumns();
-    this.items = this.productsList;
-
-    console.log("productsList: ",this.productsList);
+  ngOnDestroy(): void {
+    this.productsSubscription?.unsubscribe();
   }
 
+  ngOnInit(): void {
+    
+    this.productsSubscription = this.service.listAll().subscribe((list) => {
+      this.productsList = list
+      this.items = this.productsList;
+    });
+    
+    this.columns = this.service.getColumns();
+    
+  }
+  
+  changeOptions(event: any): void {
+    this.isSelected = true;
+    this.selectedProduct = event;
+  }
+
+  hideButtons(): void {
+    this.isSelected = false;
+  }
 }
