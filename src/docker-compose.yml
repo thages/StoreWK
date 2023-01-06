@@ -1,42 +1,32 @@
 version: '3.8'
 
 services:
-  db:
-    container_name: 'mysql'
-    image: mysql
-    command: --default-authentication-plugin=mysql_native_password
-    restart: always
-    environment:
-      MYSQL_DATABASE: CatalogDb
-      MYSQL_ROOT_PASSWORD: 081206
-    networks: 
-      - storewk
-  
   rabbitmq:
     container_name: 'rabbitmq'
     image: rabbitmq:3-management-alpine
     networks:
       - storewk
+  
+  #db:
+  #  container_name: 'mysql'
+  #  image: mysql
+  #  command: --default-authentication-plugin=mysql_native_password
+  #  restart: always
+  #  environment:
+  #    MYSQL_DATABASE: CatalogDb
+  #    MYSQL_ROOT_PASSWORD: 081206
+  #  networks: 
+  #    - storewk
+  
 
   #catalog-api:
   #  image: ${REGISTRY:-catalog}/catalog.api:${PLATFORM:-linux}-${TAG:-latest}
   #  build:
   #    context: .
-  #    dockerfile: Services/Products/Product.API/Dockerfile
+  #    dockerfile: Services/Catalog/Catalog.API/Dockerfile
   #  depends_on:
   #    - db
   #    - rabbitmq
-
-  #webspa:
-  #  image: ${REGISTRY:-catalog}/webspa:${PLATFORM:-linux}-${TAG:-latest}
-  #  build:
-  #    context: .
-  #    dockerfile: Web/WebSPA/Dockerfile
-  #    args:
-  #      NODE_IMAGE: ${NODE_IMAGE:-node:12.0}
-  #  depends_on:
-  #    - webshoppingagg
-  #    - webshoppingapigw
 
 networks:
   storewk:
