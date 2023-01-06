@@ -1,11 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import {  PoModalComponent, PoSelectOption } from '@po-ui/ng-components';
+import {  PoSelectOption } from '@po-ui/ng-components';
 import { Subscription } from 'rxjs';
-import { CategoriesService } from 'src/app/categories/categories.service';
+import { CategoriesService } from 'src/app/pages/categories/categories.service';
 import { ProductsService } from '../../products.service';
-import { IProductNew } from '../../utils/products.types';
+import { IProductEntity } from '../../utils/products.types';
 
 @Component({
   selector: 'app-add-product',
@@ -14,11 +14,9 @@ import { IProductNew } from '../../utils/products.types';
 })
 export class AddProductComponent  implements OnInit {
   
-  @ViewChild('reactiveFormData', { static: true }) reactiveFormModal: PoModalComponent;
-  
   reactiveForm: UntypedFormGroup;
   private categoriesSubscription: Subscription;
-  
+  isLoading: boolean = false;
   categoryOptions: Array<PoSelectOption>;
   
   constructor(
@@ -63,8 +61,10 @@ export class AddProductComponent  implements OnInit {
 
 
   saveForm() {
-    const newProduct: IProductNew = this.reactiveForm.value;
+    this.isLoading = true;
+    const newProduct: IProductEntity = this.reactiveForm.value;
     this.productsService.createProduct(newProduct).subscribe(() => {
+      this.isLoading = false;
       this.router.navigate(['/produtos/lista'])
     });
   }

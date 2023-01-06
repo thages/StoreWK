@@ -36,6 +36,14 @@ export class CommonApiService {
     }
   }
 
+  protected delete<T>(id: number): Observable<T> {
+    try {
+      return this.httpClient.delete<T>(`${this.path}/${id}`);
+    } catch (e: any) {
+      return handleErrors(e);
+    }
+  }
+
   protected list<T>(): Observable<T> {
     try {
       return this.httpClient.get<T>(`${this.path}/list`);

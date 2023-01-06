@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { IProduct, IProductsListFilter } from './utils/products.types';
-import { CommonApiService } from '../api/common-api.service';
+import { IProduct, IProductsListFilter, IProductEntity } from './utils/products.types';
+import { CommonApiService } from '../../api/common-api.service';
 import { PoTableColumn } from '@po-ui/ng-components';
-import { IPageableResult } from '../api/common.types';
+import { IPageableResult } from '../../api/common.types';
 
 @Injectable({
   providedIn: 'root'
@@ -16,16 +16,20 @@ export class ProductsService extends CommonApiService {
    }
 
    
-  getProductById(id: number): Observable<IProduct> {
-    return this.findById<IProduct>(id)
+  getProductById(id: number): Observable<IProductEntity> {
+    return this.findById<IProductEntity>(id)
   }
   
-  createProduct(entity: IProduct): Observable<any> {
-    return this.insert<IProduct, any>(entity);
+  createProduct(entity: IProductEntity): Observable<any> {
+    return this.insert<IProductEntity, any>(entity);
   }
 
-  editProduct(entity: IProduct): Observable<any> {
-    return this.update<IProduct, any>(entity);
+  editProduct(entity: IProductEntity): Observable<any> {
+    return this.update<IProductEntity, any>(entity);
+  }
+
+  deleteProduct(id: number): Observable<any> {
+    return this.delete<any>(id);
   }
 
   listAll(): Observable<IProduct[]>{

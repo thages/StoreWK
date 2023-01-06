@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { PoTableColumn } from '@po-ui/ng-components';
 import { Observable } from 'rxjs';
-import { CommonApiService } from '../api/common-api.service';
+import { CommonApiService } from '../../api/common-api.service';
 import { ICategory } from './utils/categories.types';
 
 @Injectable({
@@ -14,16 +14,20 @@ export class CategoriesService extends CommonApiService {
     super('http://localhost:5070/api/v1/Categories', httpClient)
    }
 
-  getProductById(id: number): Observable<ICategory> {
+  getCategoryById(id: number): Observable<ICategory> {
     return this.findById<ICategory>(id)
   }
   
-  createProduct(entity: ICategory): Observable<any> {
+  createCategory(entity: ICategory): Observable<any> {
     return this.insert<ICategory, any>(entity);
   }
 
-  editProduct(entity: ICategory): Observable<any> {
+  editCategory(entity: ICategory): Observable<any> {
     return this.update<ICategory, any>(entity);
+  }
+
+  deleteCategory(id: number): Observable<any> {
+    return this.delete<any>(id);
   }
 
   listAll(): Observable<ICategory[]>{

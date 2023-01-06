@@ -115,7 +115,7 @@ public class ProductsController : ControllerBase
 
     [Route("list")]
     [HttpGet]
-    [ProducesResponseType(typeof(List<Product>), (int)HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(IEnumerable<ProductPageableListItem>), (int)HttpStatusCode.OK)]
     [ProducesResponseType((int)HttpStatusCode.NotFound)]
     public async Task<ActionResult> ListCategoriesAsync()
     {

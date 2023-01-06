@@ -19,12 +19,16 @@ public class ProductQueries
         return await connection.QueryFirstOrDefaultAsync<Product>("SELECT * FROM products  WHERE Id=@id", new { id });
     }
 
-    public async Task<IEnumerable<Product>> GetProductsAsync()
+    public async Task<IEnumerable<ProductPageableListItem>> GetProductsAsync()
     {
         using var connection = new MySqlConnection(_connectionString);
         connection.Open();
 
-        return await connection.QueryAsync<Product>("SELECT * FROM products");
+        var products = await connection.QueryAsync<dynamic>(@"SELECT p.id, p.name, p.description, p.price, c.name as category 
+                            FROM products p
+                            LEFT JOIN categories c ON p.categoryId = c.Id");
+
+        return MapListItems(products.ToList());
     }
 
     public async Task<PageableResult<ProductPageableListItem>> ProductsPageableList(ProductPageableListParams searchParams)
@@ -48,10 +52,10 @@ public class ProductQueries
         return new PageableResult<ProductPageableListItem>(
             pageSize: searchParams.PageSize,
             currentPage: searchParams.CurrentPage,
-            results: MapPageableItems(products));
+            results: MapListItems(products));
     }
     
-    private List<ProductPageableListItem> MapPageableItems(List<dynamic> products)
+    private List<ProductPageableListItem> MapListItems(List<dynamic> products)
     {
         List<ProductPageableListItem> results = new();
 

@@ -8,7 +8,7 @@ export interface IProduct {
     category?: string | null;
 }
 
-export interface IProductNew extends Omit<IProduct, 'category'> {
+export interface IProductEntity extends Omit<IProduct, 'category'> {
     categoryId?: number | null;
 }
 

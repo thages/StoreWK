@@ -38,16 +38,29 @@ export class ListProductsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
+    this.isLoading = true;
+    this.columns = this.service.getColumns();
+
+    this.loadProductsList();
+  }
+  
+  loadProductsList(): void {
     this.productsSubscription = this.service.listAll().subscribe((list) => {
       this.productsList = list
       this.items = this.productsList;
+      this.isLoading = false;
+    });
+  }
+
+  onDelete(): void {
+    this.isLoading = true;
+    this.service.deleteProduct(this.selectedProduct!.id).subscribe(() => {
+      this.isLoading = false;
+      this.loadProductsList();
     });
     
-    this.columns = this.service.getColumns();
-    
   }
-  
+
   changeOptions(event: any): void {
     this.isSelected = true;
     this.selectedProduct = event;

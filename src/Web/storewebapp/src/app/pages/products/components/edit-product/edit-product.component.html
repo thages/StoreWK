@@ -1,0 +1,28 @@
+<po-page-default p-title="Adicionar Produto">
+    <form [formGroup]="reactiveForm">
+        <div class="po-row">
+          <po-input class="po-md-9" formControlName="name" p-clean p-label="Nome do produto"> </po-input>
+        </div>
+      
+        <div class="po-row">
+          <po-input class="po-lg-9" formControlName="description" p-clean p-label="Descrição do produto"> </po-input>
+        </div>
+      
+        <div class="po-row">
+            <po-select
+                class="po-lg-6" 
+                formControlName="categoryId" 
+                name="select"
+                p-label="Categoria"
+                [p-options]="categoryOptions"
+            >
+            </po-select>
+        
+            <po-number class="po-lg-3" formControlName="price" p-label="Preço" p-clean> </po-number>
+        </div>
+        <br/>
+        <div class="po-row">
+          <po-button class="po-md-3" p-label="Salvar" [p-disabled]="!reactiveForm.valid" (p-click)="saveForm()"> </po-button>
+        </div>
+    </form>
+</po-page-default>

@@ -1,5 +1,6 @@
+<po-loading-overlay *ngIf="isLoading"></po-loading-overlay>
 <po-page-default p-title="Produtos">
-    <div class="po-row">
+    <div class="po-row po-mb-2">
         <po-button
           class="po-md-2"
           p-label="Adicionar"
@@ -13,7 +14,7 @@
         <po-button *ngIf="isSelected"
           class="po-md-2"
           p-label="Excluir"
-          routerLink="/produtos/editar/{{selectedProduct?.id}}"
+          (p-click)="onDelete()"
         ></po-button>
     </div>
 <po-table

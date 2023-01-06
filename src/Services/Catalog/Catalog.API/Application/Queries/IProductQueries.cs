@@ -3,6 +3,6 @@
 public interface IProductQueries
 {
     Task<Product> GetProductAsync(int id);
-    Task<IEnumerable<Product>> GetProductsAsync();
+    Task<IEnumerable<ProductPageableListItem>> GetProductsAsync();
     Task<PageableResult<ProductPageableListItem>> ProductsPageableList(ProductPageableListParams searchParams);
 }

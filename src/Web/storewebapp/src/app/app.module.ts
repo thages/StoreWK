@@ -5,10 +5,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PoModule } from '@po-ui/ng-components';
 import { PoTemplatesModule } from '@po-ui/ng-templates';
-import { ProductComponent } from './products/components/product/product.component';
-import { ListProductsComponent } from './products/components/list-products/list-products.component';
+import { ProductComponent } from './pages/products/components/product/product.component';
+import { ListProductsComponent } from './pages/products/components/list-products/list-products.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
-import { AddProductComponent } from './products/components/add-product/add-product.component';
+import { AddProductComponent } from './pages/products/components/add-product/add-product.component';
+import { EditProductComponent } from './pages/products/components/edit-product/edit-product.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { AddProductComponent } from './products/components/add-product/add-produ
     ProductComponent,
     ListProductsComponent,
     SidenavComponent,
-    AddProductComponent
+    AddProductComponent,
+    EditProductComponent
   ],
   imports: [
     BrowserModule,
