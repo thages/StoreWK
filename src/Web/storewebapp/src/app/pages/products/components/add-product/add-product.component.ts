@@ -55,7 +55,7 @@ export class AddProductComponent  implements OnInit {
       name: ['', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(50)])],
       description: ['', Validators.compose([Validators.minLength(0), Validators.maxLength(150)])],
       price: ['', Validators.compose([Validators.required, Validators.min(1), Validators.max(999999)])],
-      categoryId: [''],
+      categoryId: ['',Validators.required],
     });
   }
 

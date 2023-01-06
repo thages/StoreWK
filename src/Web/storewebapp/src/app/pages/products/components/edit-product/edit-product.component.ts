@@ -17,7 +17,7 @@ export class EditProductComponent implements OnInit {
   reactiveForm: UntypedFormGroup;
   private categoriesSubscription: Subscription;
   private productsSubscription: Subscription;
-  
+  isLoading: boolean = false;
   categoryOptions: Array<PoSelectOption>;
   
   constructor(
@@ -31,15 +31,17 @@ export class EditProductComponent implements OnInit {
   }
   ngOnDestroy() {
     this.categoriesSubscription?.unsubscribe();
+    this.productsSubscription?.unsubscribe();
   }
 
   ngOnInit(){
     const id = this.route.snapshot.paramMap.get('id');
-
+    this.isLoading = true;
     this.productsSubscription = this.productsService
       .getProductById(parseInt(id!))
       .subscribe((product) => {
         this.populateForm(product);
+        this.isLoading = false;
       })
 
     this.categoriesSubscription = this.categoriesService
@@ -63,7 +65,7 @@ export class EditProductComponent implements OnInit {
       name: ['', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(50)])],
       description: ['', Validators.compose([Validators.minLength(0), Validators.maxLength(150)])],
       price: ['', Validators.compose([Validators.required, Validators.min(1), Validators.max(999999)])],
-      categoryId: [''],
+      categoryId: ['',Validators.required],
     });
   }
 
@@ -78,8 +80,10 @@ export class EditProductComponent implements OnInit {
   }
 
   saveForm() {
+    this.isLoading = true;
     const productToUpdate: IProductEntity = this.reactiveForm.value;
     this.productsService.editProduct(productToUpdate).subscribe(() => {
+      this.isLoading = false;
       this.router.navigate(['/produtos/lista'])
     });
   }

@@ -1,0 +1,17 @@
+<po-loading-overlay *ngIf="isLoading"></po-loading-overlay>
+<po-page-default p-title="Editar Categoria">
+    <form [formGroup]="reactiveForm">
+        <div class="po-row">
+          <po-input class="po-md-9" formControlName="name" p-clean p-label="Nome da categoria"> </po-input>
+        </div>
+      
+        <div class="po-row">
+          <po-input class="po-lg-9" formControlName="description" p-clean p-label="Descrição do categoria"> </po-input>
+        </div>
+      
+        <br/>
+        <div class="po-row">
+          <po-button class="po-md-3" p-label="Salvar" [p-disabled]="!reactiveForm.valid" (p-click)="saveForm()"> </po-button>
+        </div>
+    </form>
+</po-page-default>

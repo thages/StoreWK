@@ -57,6 +57,7 @@ export class ListProductsComponent implements OnInit {
     this.service.deleteProduct(this.selectedProduct!.id).subscribe(() => {
       this.isLoading = false;
       this.loadProductsList();
+      this.hideButtons();
     });
     
   }
@@ -68,5 +69,6 @@ export class ListProductsComponent implements OnInit {
 
   hideButtons(): void {
     this.isSelected = false;
+    this.selectedProduct = null;
   }
 }

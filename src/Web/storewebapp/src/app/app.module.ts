@@ -10,6 +10,9 @@ import { ListProductsComponent } from './pages/products/components/list-products
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { AddProductComponent } from './pages/products/components/add-product/add-product.component';
 import { EditProductComponent } from './pages/products/components/edit-product/edit-product.component';
+import { ListCategoriesComponent } from './pages/categories/list-categories/list-categories.component';
+import { AddCategoryComponent } from './pages/categories/add-category/add-category.component';
+import { EditCategoryComponent } from './pages/categories/edit-category/edit-category.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +21,10 @@ import { EditProductComponent } from './pages/products/components/edit-product/e
     ListProductsComponent,
     SidenavComponent,
     AddProductComponent,
-    EditProductComponent
+    EditProductComponent,
+    ListCategoriesComponent,
+    AddCategoryComponent,
+    EditCategoryComponent
   ],
   imports: [
     BrowserModule,
